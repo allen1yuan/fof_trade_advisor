@@ -435,7 +435,7 @@ w1 × 收益表现得分
 ## 项目结构
 
 ```text
-fof-fund-selection-ml/
+fof_trade_advisor/
 │
 ├── README.md
 ├── requirements.txt
