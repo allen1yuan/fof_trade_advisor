@@ -52,7 +52,7 @@
 ## 二、整体架构
 
 ```
-fof_trade_advisor/
+fund_factors/
 ├── README.md                    ← 本文件（完整项目文档）
 ├── base/
 │   ├── factor_base.py           ← 因子基类、数据契约（FactorBase / FactorContext）
@@ -171,9 +171,9 @@ fof_trade_advisor/
 | 因子代码 | 含义 | 公式 | 方向 |
 |---|---|---|---|
 | `VOL_ANN` | 年化波动率 | $\sigma_{ann} = \sqrt{252} \cdot \text{std}(r_t)$ | ↓ |
-| `MDD` | 最大回撤（负值） | $MDD = \min_t \dfrac{NAV_t - \max_{s \le t} NAV_s}{\max_{s \le t} NAV_s}$ | ↑（越接近 0 越好） |
+| `MDD` | 最大回撤（负值） | $MDD = \min_t \frac{NAV_t - \max_{s \le t} NAV_s}{\max_{s \le t} NAV_s}$ | ↑（越接近 0 越好） |
 | `MDD_DAYS` | 回撤未恢复最长天数 | 从峰值到谷底的交易日跨度 | ↓ |
-| `DOWNSIDE_VOL` | 下行波动率（年化） | $\sigma_d = \sqrt{\dfrac{252}{N}\sum_{t} \min(r_t - MAR, 0)^2}$ | ↓ |
+| `DOWNSIDE_VOL` | 下行波动率（年化） | $\sigma_d = \sqrt{\frac{252}{N}\sum_{t} \min(r_t - MAR, 0)^2}$ | ↓ |
 | `VAR_95` | 95% 历史 VaR（正值） | $VaR = -\text{Quantile}_{5\%}(r_t)$ | ↓ |
 | `CVAR_95` | 95% 条件 VaR（ES） | $CVaR = -\mathbb{E}[r_t \mid r_t \le -VaR]$ | ↓ |
 | `TRACK_ERROR` | 跟踪误差（年化） | $TE = \sqrt{252} \cdot \text{std}(r_{p,t} - r_{b,t})$ | ↓ |
@@ -193,7 +193,7 @@ fof_trade_advisor/
 |---|---|---|---|
 | `SHARPE` | 夏普比率 | $\text{Sharpe} = (R_{ann} - r_f) / \sigma_{ann}$ | ↑ |
 | `SORTINO` | 索提诺比率 | $\text{Sortino} = (R_{ann} - MAR) / \sigma_d$ | ↑ |
-| `CALMAR` | 卡玛比率 | $\text{Calmar} = R_{ann} / |MDD|$ | ↑ |
+| `CALMAR` | 卡玛比率 | $\text{Calmar} = R_{ann} / \vert MDD \vert$ | ↑ |
 | `INFO_RATIO` | 信息比率 | $IR = \alpha_{bench,ann} / TE$ | ↑ |
 | `TREYNOR` | 特雷诺比率 | $\text{Treynor} = (R_{ann} - r_f) / \beta$ | ↑ |
 
@@ -249,9 +249,9 @@ $$\text{StyleDrift} = \frac{1}{K} \sum_{i=1}^{K} \text{std}_{t}(\hat{\beta}_{i,t
 |---|---|---|---|
 | `IND_HHI` | 行业 Herfindahl 集中度 | $HHI = \sum_{j=1}^{J} w_{p,j}^2$ | ↓ |
 | `IND_NUM` | 有效行业数 | $N_{eff} = 1 / HHI$ | ↑ |
-| `IND_DEVIATION` | 行业偏离度 | $D = \sum_j |w_{p,j} - w_{b,j}|$ | 中性 |
+| `IND_DEVIATION` | 行业偏离度 | $D = \sum_j \vert w_{p,j} - w_{b,j} \vert$ | 中性 |
 | `TOP3_IND` | 前三大行业权重和 | $\sum_{\text{top3}} w_{p,j}$ | ↓ |
-| `IND_ROTATION` | 行业轮动速度（季度） | $0.5 \times \sum_j |w_{p,j,t} - w_{p,j,t-1}|$ | 中性 |
+| `IND_ROTATION` | 行业轮动速度（季度） | $0.5 \times \sum_j \vert w_{p,j,t} - w_{p,j,t-1} \vert$ | 中性 |
 
 **数据口径说明：** 基于季报持仓计算，所有权重相对持仓总权重（重仓股之和）归一化，而非相对基金净值。
 
@@ -266,8 +266,8 @@ $$\text{StyleDrift} = \frac{1}{K} \sum_{i=1}^{K} \text{std}_{t}(\hat{\beta}_{i,t
 | `TOP10_CONC` | 前十大重仓股权重和 | $\sum_{i=1}^{10} w_{p,i}$ | 中性 |
 | `STOCK_HHI` | 个股 HHI | $\sum_i w_{p,i}^2$ | ↓ |
 | `STOCK_NUM` | 持股数量（披露口径） | 持仓股票数 | ↑ |
-| `TURNOVER` | 近似双边换手率 | $0.5 \times \sum_i |w_{i,t} - w_{i,t-1}|$（相邻披露期） | ↓ |
-| `OVERLAP_PEER` | 与同类持仓余弦相似度 | $\cos(w_p,\, \bar{w}_{peer}) = \dfrac{w_p \cdot \bar{w}_{peer}}{\|w_p\| \|\bar{w}_{peer}\|}$ | ↓ |
+| `TURNOVER` | 近似双边换手率 | $0.5 \times \sum_i \vert w_{i,t} - w_{i,t-1} \vert$（相邻披露期） | ↓ |
+| `OVERLAP_PEER` | 与同类持仓余弦相似度 | $\cos(w_p, \bar{w}_{peer}) = \frac{w_p \cdot \bar{w}_{peer}}{\Vert w_p \Vert \cdot \Vert \bar{w}_{peer} \Vert}$ | ↓ |
 | `CROWDING` | 抱团股暴露 | 持仓中机构抱团股权重之和 | ↓ |
 
 **抱团股识别方法：** 以所有主动权益基金持仓按权重加总，季度更新，取全市场持仓权重前 100 只（或前 5%）定义为抱团股池。
@@ -325,7 +325,7 @@ $$\text{Total\_Selection} = \sum_j \text{Selection}_j$$
 |---|---|---|---|
 | `RET_HURST` | Hurst 指数 | R/S 分析：$H = \text{slope}(\log(R/S)$ vs $\log n)$ | ↑（$H > 0.5$ 表趋势） |
 | `WIN_QUARTERS` | 近 8 季度跑赢基准比例 | $\frac{1}{8}\sum_{q=1}^{8}\mathbf{1}\{R_{p,q} > R_{b,q}\}$ | ↑ |
-| `RANK_STABILITY` | 排名稳定性（变异系数倒数） | $1 / (1 + |CV_q|)$，$CV = \sigma_q / \mu_q$ | ↑ |
+| `RANK_STABILITY` | 排名稳定性（变异系数倒数） | $1 / (1 + \vert CV_q \vert)$，$CV = \sigma_q / \mu_q$ | ↑ |
 | `ROLLING_IR_MEAN` | 滚动 6 月 IR 均值 | $\bar{IR} = \frac{1}{N}\sum_{k=1}^{N} IR_{6M,k}$ | ↑ |
 | `RET_AUTOCORR` | 月度收益自相关 $\rho_1$ | $\rho_1 = \text{Corr}(R_{m}, R_{m-1})$ | ↑ |
 
@@ -351,7 +351,7 @@ $$\text{Total\_Selection} = \sum_j \text{Selection}_j$$
 
 ### 6.2 异常值处理（MAD 法）
 
-$$MAD = 1.4826 \times \text{median}(|x_i - \text{median}(x)|)$$
+$$MAD = 1.4826 \times \text{median}(\vert x_i - \text{median}(x) \vert)$$
 
 $$\tilde{x}_i = \begin{cases} x_{med} + n \cdot MAD & x_i > x_{med} + n \cdot MAD \\ x_{med} - n \cdot MAD & x_i < x_{med} - n \cdot MAD \\ x_i & \text{otherwise} \end{cases}$$
 
@@ -397,7 +397,7 @@ $$IC_t = \text{Corr}(f_{i,t},\ r_{i,t+\Delta})$$
 
 | 指标 | 计算 | 建议门槛 |
 |---|---|---|
-| IC 均值 | $\bar{IC} = \frac{1}{T}\sum_t IC_t$ | $|\bar{IC}| \ge 0.03$ |
+| IC 均值 | $\bar{IC} = \frac{1}{T}\sum_t IC_t$ | $\vert\bar{IC}\vert \ge 0.03$ |
 | IC_IR | $\bar{IC} / \text{std}(IC)$ | $\ge 0.30$ |
 | IC 胜率 | $\frac{1}{T}\sum_t \mathbf{1}\{IC_t > 0\}$ | $\ge 0.55$ |
 | t 统计量 | $\bar{IC} / (\text{std}(IC)/\sqrt{T})$ | $\ge 2.0$ |
@@ -411,7 +411,7 @@ $$IC_t = \text{Corr}(f_{i,t},\ r_{i,t+\Delta})$$
 
 ### 7.3 因子相关性筛查
 
-对所有候选因子计算两两 Rank 相关系数，若 $|\rho| > 0.70$，则保留 IC_IR 更高的一个，剔除另一个，避免合成时信号冗余。
+对所有候选因子计算两两 Rank 相关系数，若 $\vert\rho\vert > 0.70$，则保留 IC_IR 更高的一个，剔除另一个，避免合成时信号冗余。
 
 ### 7.4 市场分段稳健性
 
@@ -600,7 +600,7 @@ $$w^* = \Sigma^{-1} \mu_{IC}$$
 
 ```bash
 pip install numpy pandas scipy statsmodels
-cd fof_trade_advisor
+cd fund_factors
 python -m examples.demo
 ```
 
