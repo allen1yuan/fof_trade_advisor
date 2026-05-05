@@ -52,7 +52,7 @@
 ## 二、整体架构
 
 ```
-fund_factors/
+fof_trade_advisor/
 ├── README.md                    ← 本文件（完整项目文档）
 ├── base/
 │   ├── factor_base.py           ← 因子基类、数据契约（FactorBase / FactorContext）
@@ -600,7 +600,7 @@ $$w^* = \Sigma^{-1} \mu_{IC}$$
 
 ```bash
 pip install numpy pandas scipy statsmodels
-cd fund_factors
+cd fof_trade_advisor
 python -m examples.demo
 ```
 
