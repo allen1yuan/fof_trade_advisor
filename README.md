@@ -323,7 +323,7 @@ $$\text{Total\_Selection} = \sum_j \text{Selection}_j$$
 
 | 因子代码 | 含义 | 公式 | 方向 |
 |---|---|---|---|
-| `RET_HURST` | Hurst 指数 | R/S 分析：$H = \text{slope}(\log(R/S)$ vs $\log n)$ | ↑（$H > 0.5$ 表趋势） |
+| `RET_HURST` | Hurst 指数 | R/S 分析：$H = \text{slope}(\log(R/S) \text{ vs } \log n)$ | ↑（$H > 0.5$ 表趋势） |
 | `WIN_QUARTERS` | 近 8 季度跑赢基准比例 | $\frac{1}{8}\sum_{q=1}^{8}\mathbf{1}\{R_{p,q} > R_{b,q}\}$ | ↑ |
 | `RANK_STABILITY` | 排名稳定性（变异系数倒数） | $1 / (1 + \vert CV_q \vert)$，$CV = \sigma_q / \mu_q$ | ↑ |
 | `ROLLING_IR_MEAN` | 滚动 6 月 IR 均值 | $\bar{IR} = \frac{1}{N}\sum_{k=1}^{N} IR_{6M,k}$ | ↑ |
