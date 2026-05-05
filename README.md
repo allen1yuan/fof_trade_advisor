@@ -302,7 +302,7 @@ $$\text{Selection}_j = w_{b,j} \cdot (r_{p,j} - r_{b,j})$$
 
 $$\text{Interaction}_j = (w_{p,j} - w_{b,j}) \cdot (r_{p,j} - r_{b,j})$$
 
-$$\text{Total\_Selection} = \sum_j \text{Selection}_j$$
+$$\text{Total Selection} = \sum_j \text{Selection}_j$$
 
 | 因子代码 | 含义 | 方向 |
 |---|---|---|
