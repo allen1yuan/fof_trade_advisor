@@ -14,7 +14,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from factor_base import (
+from base.factor_base import (
     FactorBase, FactorContext, TRADING_DAYS_PER_YEAR,
     annualize_return, annualize_vol, max_drawdown, downside_vol,
 )

@@ -7,8 +7,8 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from factor_base import FactorBase, FactorContext
-from industry import HoldingFactorBase, _get_holding_at
+from base.factor_base import FactorBase, FactorContext
+from factors.industry import HoldingFactorBase, _get_holding_at
 
 
 class Top10Concentration(HoldingFactorBase):

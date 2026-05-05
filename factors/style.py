@@ -15,7 +15,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from factor_base import FactorBase, FactorContext, TRADING_DAYS_PER_YEAR
+from base.factor_base import FactorBase, FactorContext, TRADING_DAYS_PER_YEAR
 
 
 # 默认 7 个 Barra 风格因子代码

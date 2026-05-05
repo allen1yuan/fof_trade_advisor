@@ -19,26 +19,26 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import numpy as np
 import pandas as pd
 
-from factor_base import FactorContext
+from base.factor_base import FactorContext
 
 # 因子导入
-from performance import (
+from factors.performance import (
     CumulativeReturn, AnnualizedReturn, ExcessReturnVsBench, WinRateMonthly,
     SharpeRatio, SortinoRatio, CalmarRatio, InformationRatio,
 )
-from risk import (
+from factors.risk import (
     AnnualizedVol, MaxDrawdown, DownsideVol,
     HistoricalVaR, ConditionalVaR, TrackingError, BetaToBench,
 )
-from style import StyleExposure, StyleR2, StyleDrift, DEFAULT_STYLES
-from industry import IndustryHHI, EffectiveIndustryNumber, Top3IndustryWeight
-from holding import Top10Concentration, StockHHI, StockNumber, TurnoverRate
-from manager import TM_Alpha, TM_Gamma, HM_Alpha, HM_Beta2
-from persistence import (
+from factors.style import StyleExposure, StyleR2, StyleDrift, DEFAULT_STYLES
+from factors.industry import IndustryHHI, EffectiveIndustryNumber, Top3IndustryWeight
+from factors.holding import Top10Concentration, StockHHI, StockNumber, TurnoverRate
+from factors.manager import TM_Alpha, TM_Gamma, HM_Alpha, HM_Beta2
+from factors.persistence import (
     HurstExponent, QuarterlyWinStreak, RankStability, ReturnAutocorr,
 )
 
-from processor import preprocess_factor, equal_weight_combine
+from preprocess.processor import preprocess_factor, equal_weight_combine
 
 
 # ============================================================

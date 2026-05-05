@@ -12,7 +12,7 @@ from typing import Optional
 import numpy as np
 import pandas as pd
 
-from factor_base import FactorBase, FactorContext
+from base.factor_base import FactorBase, FactorContext
 
 
 def _get_holding_at(ctx: FactorContext, fund_id: str,

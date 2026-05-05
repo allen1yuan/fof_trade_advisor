@@ -11,7 +11,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from factor_base import FactorBase, FactorContext, TRADING_DAYS_PER_YEAR
+from base.factor_base import FactorBase, FactorContext, TRADING_DAYS_PER_YEAR
 
 
 def _get_bench_ret(ctx: FactorContext, bench_id: str) -> pd.Series:
